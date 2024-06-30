@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, StatusBar } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker"
+
 
 export default function CompFormEvento(){
     const [nombreEvento, setNombreEvento] = useState("")
@@ -10,6 +12,41 @@ export default function CompFormEvento(){
   const [precioEvento, setPrecioEvento] = useState(0)
   const [descripEvento, setDescripEvento] = useState("")
   const [ready, setReady] = useState(false)
+
+
+  const [date, setDate] = useState(new Date())
+  const [showPicker, setShowPicker] = useState(false)
+  const [showTimePicker, setShowTimePicker] = useState(false);
+ 
+
+  const handleDateChange = (event, selectedDate) => {
+    if(event.type === 'set'){
+      const currentDate = selectedDate || date
+      console.log(currentDate)
+      setDate(currentDate)
+    }
+    setShowPicker(false)
+  }
+
+  const handleTimeChange = (event, selectedDate) => {
+    if(event.type === 'set'){
+      const currentDate = selectedDate || date
+      console.log(currentDate)
+      setDate(currentDate)
+    }
+    setShowTimePicker(false)
+  }
+
+  // Obtener la fecha actual más un día
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+ 
+
+
+
+
+
 
   const submit = () => {
     Alert.alert("Datos enviados", "Datos enviados correctamente",[{text:"ACEPTAR"}])
@@ -51,12 +88,12 @@ export default function CompFormEvento(){
 
   //verificamos si los campos estan llenos para controlar el disabled o enabled del boton
   useEffect(() => {
-    if (nombreEvento != "" && emailContacto != "" && telContacto != "" && lugarEvento != "" && direccionEvento != "" && precioEvento != 0 && descripEvento != "") {
+    if (nombreEvento != "" && emailContacto != "" && telContacto != "" && lugarEvento != "" && direccionEvento != "" && precioEvento != 0 && descripEvento != "" && date.toLocaleDateString() != new Date().toLocaleDateString()) {
       setReady(true);
     } else {
       setReady(false);
     }
-  }, [nombreEvento, emailContacto, telContacto, lugarEvento, direccionEvento, precioEvento, descripEvento]);
+  }, [nombreEvento, emailContacto, telContacto, lugarEvento, direccionEvento, precioEvento, descripEvento, date]);
 
   return (
     <SafeAreaView>
@@ -101,6 +138,7 @@ export default function CompFormEvento(){
               placeholder={"Nombre del lugar donde se realizará el evento"}
               value={lugarEvento}
               onChangeText={handleLugarChange}
+              
             />
           </View>
 
@@ -136,26 +174,55 @@ export default function CompFormEvento(){
             />
           </View>
 
-          <View style={styles.textInputsCont}>
-            <Text style={styles.textLabels}>Precio entrada</Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder={"$"}
-              value={precioEvento.toString()}
-              onChangeText={handlePrecioChange}
-            />
+          
+
+          <View style = {styles.containerDateTime}>
+          <View style = {styles.textInputsCont}>
+            <Text style = {[styles.textLabels, styles.textTituloLabelsGroup]}>Hora y Fecha del evento </Text>
+          </View>
+            <View>
+              <TouchableOpacity onPress={() => setShowPicker(true)} style = {styles.EstiloBoton}>
+                <Text style = {styles.buttonStyleText}>Escoja la fecha del evento </Text>
+              </TouchableOpacity>
+                { showPicker && (
+                  <DateTimePicker
+                  onChange={handleDateChange}
+                  mode={'date'}
+                  value={ date || new Date() }
+                  minimumDate={tomorrow}
+                  />
+                )}
+            </View>
+
+            <View>
+              <TouchableOpacity onPress={() => setShowTimePicker(true)} style = {styles.EstiloBoton}>
+                <Text style = {styles.buttonStyleText}>Hora del evento</Text>
+              </TouchableOpacity>
+                { showTimePicker && (
+                  <DateTimePicker
+                  onChange={handleTimeChange}
+                  mode={'time'}
+                  value={ date || new Date() }
+                  is24Hour={true}
+                  />
+                )}
+            </View>
           </View>
 
           <TouchableOpacity
             style={[
               styles.EstiloBoton,
               {
-                backgroundColor: ready ? "#4630EB" : "grey",
+                backgroundColor: ready ? "#396060" : "#4d8080",
               },
             ]}
             disabled={!ready}
             onPress={submit}>
-            <Text style={styles.buttonStyleText}> Contactanos </Text>
+            <Text style={[styles.buttonStyleText,
+              {
+                color: ready ? "#afcfcf" : "#8fbcbc"
+              }
+            ]}> Registrar Evento </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -168,15 +235,14 @@ const styles = StyleSheet.create({
     Container: {
       height: "100%",
       paddingHorizontal: 30,
-      backgroundColor: "#fff",
+      backgroundColor: "#568f8f",
     },
     titulo: {
-      fontSize: 20,
-      color: "#344055",
-      fontWeight: "500",
+      fontSize: 30,
+      color: "#afcfcf",
+      fontWeight: "bold",
       paddingTop: 20,
       paddingBottom: 15,
-      fontFamily: "JosefinSans_500Medium",
       textTransform: "capitalize",
     },
      
@@ -185,18 +251,16 @@ const styles = StyleSheet.create({
     },
     textLabels: {
       fontWeight: "bold",
-      // fontSize: 15,
-      color: "#7d7d7d",
+      color: "#8fbcbc",
       paddingBottom: 5,
-      fontFamily: "JosefinSans_300Light",
       lineHeight: 25,
     },
     textInput: {
       borderWidth: 1,
-      borderColor: "rgba(0, 0, 0, 0.3)",
+      borderColor: "#2f4f4f",
       paddingHorizontal: 15,
       paddingVertical: 6,
-      borderRadius: 2,
+      borderRadius: 2
     },
     multilinea: {
       paddingVertical: 4,
@@ -208,9 +272,20 @@ const styles = StyleSheet.create({
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      marginVertical: 30,
+      marginVertical: 10,
+      backgroundColor: "#396060"
     },
     buttonStyleText: {
-      color: "#eee",
+      color: "#afcfcf",
+    },
+    containerDateTime: {
+      borderWidth: 1,
+      marginVertical: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 45,
+      borderColor: "#2f4f4f"
+    },
+    textTituloLabelsGroup: {
+      textAlign: "center"
     }
   });
