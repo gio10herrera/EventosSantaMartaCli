@@ -8,23 +8,12 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 import CompViewButtonEventos from './components/CompViewButtonEventos';
+import CompFormEvento from './components/CompFormEvento';
 
 
 
@@ -33,7 +22,7 @@ import CompViewButtonEventos from './components/CompViewButtonEventos';
 function App() {
   return (
     <View style = {styles.container}>
-      <CompViewButtonEventos></CompViewButtonEventos>
+      <CompFormEvento></CompFormEvento>
     </View>
   );
 }
