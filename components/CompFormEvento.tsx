@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import { Alert, Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, StatusBar } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker"
 
+//importar firebase
+import appFirebase from "../data/credenciales"
+import { addDoc, collection, getFirestore } from "firebase/firestore";
+
+
+const db = getFirestore(appFirebase)
 
 export default function CompFormEvento(){
-    const [nombreEvento, setNombreEvento] = useState("")
+  const [nombreEvento, setNombreEvento] = useState("")
   const [emailContacto, setEmailContacto] = useState("")
   const [telContacto, setTelContacto] = useState("")
   const [lugarEvento, setLugarEvento] = useState("")
@@ -17,10 +23,23 @@ export default function CompFormEvento(){
   const [date, setDate] = useState(new Date())
   const [showPicker, setShowPicker] = useState(false)
   const [showTimePicker, setShowTimePicker] = useState(false);
+
+  const limpiarTextInputs = () => {
+    setNombreEvento("")
+    setEmailContacto("")
+    setTelContacto("")
+    setLugarEvento("")
+    setDireccionEvento("")
+    setPrecioEvento(0)
+    setDescripEvento("")
+    setDate(new Date())
+
+  }
  
 
   const handleDateChange = (event, selectedDate) => {
     if(event.type === 'set'){
+      setShowPicker(false)
       const currentDate = selectedDate || date
       console.log(currentDate)
       setDate(currentDate)
@@ -30,6 +49,7 @@ export default function CompFormEvento(){
 
   const handleTimeChange = (event, selectedDate) => {
     if(event.type === 'set'){
+      setShowTimePicker(false)
       const currentDate = selectedDate || date
       console.log(currentDate)
       setDate(currentDate)
@@ -48,8 +68,27 @@ export default function CompFormEvento(){
 
 
 
-  const submit = () => {
+  const submit = async() => {
+    
+    try{
+      await addDoc(collection(db, 'eventos'),
+    {
+      nombreEvento,
+      emailContacto,
+      telContacto,
+      lugarEvento,
+      direccionEvento,
+      precioEvento,
+      descripEvento,
+      date
+    })
     Alert.alert("Datos enviados", "Datos enviados correctamente",[{text:"ACEPTAR"}])
+    console.log("añadido correctamente")
+    limpiarTextInputs()
+    }
+    catch(error){
+      console.error(error)
+    }
   }
 
   const handleDescripChange = (descr: string) => {
