@@ -14,16 +14,63 @@ import {
 
 import CompViewButtonEventos from './components/CompViewButtonEventos';
 import CompFormEvento from './components/CompFormEvento';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CompListaEventos from './components/CompListaEventos';
 
 
 
+const Stack = createNativeStackNavigator()
 
-
-function App() {
+export default function App() {
   return (
-    <View style = {styles.container}>
-      <CompFormEvento></CompFormEvento>
-    </View>
+    <NavigationContainer>
+      {/*CONTAINER DEL NAVEGADOR*/}
+      {/*STACK PRINCIPAL*/}
+      <Stack.Navigator
+        initialRouteName='Home'
+        screenOptions={
+          {
+            headerStyle: {
+              backgroundColor: "#264040"
+            },
+            headerTintColor: "#80b3b3",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              fontSize: 25
+            }
+          }
+        }
+      >
+        <Stack.Screen
+          name = "Home"
+          component={CompViewButtonEventos}
+          
+        >
+        </Stack.Screen>
+        <Stack.Screen
+          name = "CrearEvento"
+          component={CompFormEvento}
+          options={
+            {
+              title: "Registrar Evento",
+            }
+          }
+        >
+        </Stack.Screen>
+        <Stack.Screen
+          name = "ListaEventos"
+          component={CompListaEventos}
+          options={
+            {
+              title: "Lista de Eventos",
+            }
+          }
+        >
+        </Stack.Screen>
+      </Stack.Navigator>
+      
+    </NavigationContainer>
   );
 }
 
@@ -36,4 +83,3 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;

@@ -1,12 +1,16 @@
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
-export default function CompViewButtonEventos(){
+export default function CompViewButtonEventos({ navigation }){
     return (
         <View style = {styles.container}>
-            <TouchableOpacity style = {styles.botones}>
+            <TouchableOpacity style = {styles.botones}
+                onPress={() => navigation.navigate('ListaEventos')}
+            >
                 <Text style = {styles.textos}>Eventos Ciudad de Santa Marta</Text>
             </TouchableOpacity>
-            <TouchableOpacity style = {styles.botones}>
+            <TouchableOpacity style = {styles.botones}
+                onPress={() => navigation.navigate('CrearEvento') }
+            >
                 <Text style = {styles.textos}>Crear Evento</Text>
             </TouchableOpacity>
         </View>
@@ -33,6 +37,7 @@ const styles = StyleSheet.create({
     },
     container:{
         flex: 1,
-        justifyContent: "center"
+        justifyContent: "center",
+        backgroundColor: "#568f8f"
     }
 })

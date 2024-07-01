@@ -260,7 +260,8 @@ const styles = StyleSheet.create({
       borderColor: "#2f4f4f",
       paddingHorizontal: 15,
       paddingVertical: 6,
-      borderRadius: 2
+      borderRadius: 2,
+      backgroundColor: "#609f9f"
     },
     multilinea: {
       paddingVertical: 4,
@@ -283,7 +284,8 @@ const styles = StyleSheet.create({
       marginVertical: 10,
       paddingVertical: 5,
       paddingHorizontal: 45,
-      borderColor: "#2f4f4f"
+      borderColor: "#2f4f4f",
+      backgroundColor: "#609f9f",
     },
     textTituloLabelsGroup: {
       textAlign: "center"
