@@ -49,6 +49,7 @@ export default function CompEventoItem({evento}){
                     justifyContent: "flex-end"
                 }]}>
                     <Text style = {styles.textTitle}>Hora: </Text>
+                    {/*Formatea la hora a hh:mm a.m o p.m*/}
                     <Text style = {styles.texts}>{new Date(evento.date).toLocaleTimeString('es-CO',{
                         hour: "2-digit",
                         minute: "2-digit"

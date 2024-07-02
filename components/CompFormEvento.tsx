@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, StatusBar } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker"
 
 //importar firebase
@@ -17,13 +17,12 @@ export default function CompFormEvento(){
   const [direccionEvento, setDireccionEvento] = useState("")
   const [precioEvento, setPrecioEvento] = useState(0)
   const [descripEvento, setDescripEvento] = useState("")
-  const [ready, setReady] = useState(false)
-
-
+  const [ready, setReady] = useState(false) //controla el enable del boton registrar evento
   const [date, setDate] = useState(new Date())
-  const [showPicker, setShowPicker] = useState(false)
-  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showPicker, setShowPicker] = useState(false) //controla el ocultar o ver el calendario de escoger fecha
+  const [showTimePicker, setShowTimePicker] = useState(false); // controla el ocultar o ver el reloj de escoger hora
 
+  //limpia los TextInput despues de hacer un registro
   const limpiarTextInputs = () => {
     setNombreEvento("")
     setEmailContacto("")
@@ -63,11 +62,7 @@ export default function CompFormEvento(){
 
  
 
-
-
-
-
-
+  //funcion que se lleva a cabo cuando se presiona el boton registrar evento
   const submit = async() => {
     
     try{
@@ -100,6 +95,8 @@ export default function CompFormEvento(){
     if(!isNaN(p)){
       setPrecioEvento(p)
     }else {
+      //controlamos que cuando por alguna razon el parseFloat 
+      //no se pueda realizar el precio tome el valor de 0
       setPrecioEvento(0)
     }
   }
@@ -223,6 +220,8 @@ export default function CompFormEvento(){
               <TouchableOpacity onPress={() => setShowPicker(true)} style = {styles.EstiloBoton}>
                 <Text style = {styles.buttonStyleText}>Escoja la fecha del evento </Text>
               </TouchableOpacity>
+                {/*muestra el DateTimePicker en modo 'date'*/}
+                {/*es decir en modo calendario*/}
                 { showPicker && (
                   <DateTimePicker
                   onChange={handleDateChange}
@@ -237,6 +236,8 @@ export default function CompFormEvento(){
               <TouchableOpacity onPress={() => setShowTimePicker(true)} style = {styles.EstiloBoton}>
                 <Text style = {styles.buttonStyleText}>Hora del evento</Text>
               </TouchableOpacity>
+                {/*muestra el DateTimePicker en modo 'time'*/}
+                {/*es decir en modo reloj*/}
                 { showTimePicker && (
                   <DateTimePicker
                   onChange={handleTimeChange}
