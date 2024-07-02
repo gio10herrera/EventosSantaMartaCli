@@ -1,26 +1,15 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
-import { EVENTS_LIST } from "../data/data";
 import CompEventoItem from "./CompEventoItem";
+//credenciales necesarias para la conexion a la BD
 import appFirebase from "../data/credenciales";
 import { collection, getDocs, getFirestore, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
+//nuestra conexion a BD
 const db = getFirestore(appFirebase)
 
-interface Doc {
-    id: string
-    nombreEvento: string
-    lugarEvento: string
-    direccionEvento: string
-    descripEvento: string
-    emailContacto: string
-    telContacto: string
-    
-
-  }
-
-  // Define la estructura del objeto Evento
+// Define la estructura del objeto Evento
 interface Evento {
     id: string;
     nombreEvento: string;
@@ -40,6 +29,7 @@ export default function CompListaEventos(){
     const fetchData = async () => {
       try {
         const eventosCollection = collection(db,"eventos")
+        //ordenamos la coleccion por fecha
         const eventosQuery = query(eventosCollection, orderBy("date", "asc"))
         const snapshot = await getDocs(eventosQuery)
         const eventsArray: Evento[] = snapshot.docs.map(doc => ({
@@ -59,7 +49,7 @@ export default function CompListaEventos(){
       }
     };
     fetchData();
-  }, []);
+  }, [eventos]);
 
     return (
         <View style = {styles.container}>

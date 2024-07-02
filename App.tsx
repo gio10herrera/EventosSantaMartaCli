@@ -6,10 +6,8 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
-  StyleSheet,
-  View,
+  StyleSheet
 } from 'react-native';
 
 import CompViewButtonEventos from './components/CompViewButtonEventos';
@@ -25,8 +23,6 @@ const Stack = createNativeStackNavigator()
 export default function App() {
   return (
     <NavigationContainer>
-      {/*CONTAINER DEL NAVEGADOR*/}
-      {/*STACK PRINCIPAL*/}
       <Stack.Navigator
         initialRouteName='Home'
         screenOptions={
