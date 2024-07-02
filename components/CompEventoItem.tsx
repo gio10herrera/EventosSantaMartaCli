@@ -9,11 +9,11 @@ export default function CompEventoItem({evento}){
             </View>
             <View style = {styles.containerLineText}>
                 <Text style = {styles.textTitle}>Lugar: </Text>
-                <Text style = {styles.texts}>{evento.nomLugarEvento}</Text>
+                <Text style = {styles.texts}>{evento.lugarEvento}</Text>
             </View>
             <View style = {styles.containerLineText}>
                 <Text style = {styles.textTitle}>Direccion: </Text>
-                <Text style = {styles.texts}>{evento.dirLugarEvento}</Text>
+                <Text style = {styles.texts}>{evento.direccionEvento}</Text>
             </View>
             <View style = {styles.containerLineText}>
                 <Text style = {styles.textTitle}>Descripción: </Text>
@@ -21,14 +21,21 @@ export default function CompEventoItem({evento}){
             </View>
             <View style = {styles.containerDatosImportantes}>
                 <View style = {styles.titleDatosImportantes}>
-                    <Text style = {styles.textTitle}>Contacto</Text>
+                    <Text style = {[styles.textTitle,{
+                        marginBottom: 10,
+                        fontSize: 17
+                    }]}>Contacto y Precio</Text>
                     <View style = {styles.containerLineText}>
                         <Text style = {styles.textTitle}>email: </Text>
-                        <Text style = {styles.texts}>{evento.emailContact}</Text>
+                        <Text style = {styles.texts}>{evento.emailContacto}</Text>
                     </View>
                     <View style = {styles.containerLineText}>
                         <Text style = {styles.textTitle}>celular: </Text>
-                        <Text style = {styles.texts}>{evento.phoneContact}</Text>
+                        <Text style = {styles.texts}>{evento.telContacto}</Text>
+                    </View>
+                    <View style = {styles.containerLineText}>
+                        <Text style = {styles.textTitle}>Precio: $</Text>
+                        <Text style = {styles.texts}>{evento.precioEvento}</Text>
                     </View>
                 </View>
             </View>
@@ -36,13 +43,13 @@ export default function CompEventoItem({evento}){
                 <View style = {styles.containerLineText}>
                     <Text style = {styles.textTitle}>Fecha: </Text>
                     {/*Formatea la fecha a dd/mm/aaaa*/}
-                    <Text style = {styles.texts}>{new Date(evento.fecha).toLocaleDateString('es-ES')}</Text>
+                    <Text style = {styles.texts}>{new Date(evento.date).toLocaleDateString('es-ES')}</Text>
                 </View>
                 <View style = {[styles.containerLineText,{
                     justifyContent: "flex-end"
                 }]}>
                     <Text style = {styles.textTitle}>Hora: </Text>
-                    <Text style = {styles.texts}>{new Date(evento.fecha).toLocaleTimeString('es-CO',{
+                    <Text style = {styles.texts}>{new Date(evento.date).toLocaleTimeString('es-CO',{
                         hour: "2-digit",
                         minute: "2-digit"
                     })}</Text>
